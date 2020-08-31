@@ -171,7 +171,7 @@
       "array": [
         0,
         0,
-        0,
+        252.8794179050561,
         0,
         0,
         0,
@@ -227,11 +227,12 @@
       "height": 1
     },
     "_renderStages": 1,
+    "_alignWithScreen": true,
     "_id": "44b5u9FOFASZC7k7RcalVq"
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Label",
+    "_name": "TestImage",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -254,8 +255,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 540.2,
-      "height": 50.4
+      "width": 1440,
+      "height": 900
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -289,10 +290,10 @@
     "_is3DNode": false,
     "_groupIndex": 0,
     "groupIndex": 0,
-    "_id": "afetXBFG5F2Yfk2E156H3K"
+    "_id": "5bQ7+/KL5Ewr+drWJCrKS8"
   },
   {
-    "__type__": "cc.Label",
+    "__type__": "cc.Sprite",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -301,25 +302,27 @@
     "_enabled": true,
     "_materials": [
       {
-        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+        "__uuid__": "be611e91-4913-4943-b48a-6077af19f8c3"
       }
     ],
-    "_useOriginalSize": false,
-    "_string": "Test Custom Preview template",
-    "_N$string": "Test Custom Preview template",
-    "_fontSize": 40,
-    "_lineHeight": 40,
-    "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
-    "_spacingX": 0,
-    "_batchAsBitmap": false,
-    "_N$horizontalAlign": 1,
-    "_N$verticalAlign": 1,
-    "_N$fontFamily": "Arial",
-    "_N$overflow": 0,
-    "_N$cacheMode": 0,
-    "_id": "c7w0w8za5F0qyRiTacA5Lx"
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_spriteFrame": {
+      "__uuid__": "16c5e5dc-a53f-424f-8344-c7f94240ab30"
+    },
+    "_type": 0,
+    "_sizeMode": 1,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_atlas": null,
+    "_id": "f9FQpNIjZGzLFJ+stRJPs2"
   },
   {
     "__type__": "cc.Canvas",
@@ -362,6 +365,7 @@
     "_isAbsHorizontalCenter": true,
     "_isAbsVerticalCenter": true,
     "_originalWidth": 0,
-    "_originalHeight": 0
+    "_originalHeight": 0,
+    "_id": "63BfcMxANP1aPq/7gZImA2"
   }
 ]
