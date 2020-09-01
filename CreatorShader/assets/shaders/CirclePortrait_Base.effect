@@ -15,8 +15,8 @@ CCEffect %{
         alphaThreshold: { value: 0.5 }
         u_edge: { value: 0.5 }
         edge_blur: { value: 0.01 }
-        color0: { value: [1,1,1,1] }
-        edge_color0: { value: [1,1,1,0] }
+        color0: { value: [1,1,1,1], editor: { type: color } }
+        edge_color0: { value: [1,1,1,0], editor: { type: color } }
 }%
 
 
@@ -84,9 +84,53 @@ CCProgram fs %{
     vec2 uv = v_uv0;
     if (uv.x < edge) {
       if (uv.y < edge) {
-        dis = distance(uv)
+        dis = distance(uv, vec2(edge, edge));
+      } else if (uv.y > (1.0 - edge)) {
+        dis = distance(uv, vec2(edge, (1.0 - edge)));
+      }
+    } else if (uv.x > (1.0 - edge)) {
+      if (uv.y < edge) {
+        dis = distance(uv, vec2((1.0 - edge), edge));
+      } else if (uv.y > (1.0 - edge)) {
+        dis = distance(uv, vec2((1.0 - edge), (1.0 - edge)));
       }
     }
+    // 混合外边颜色
+    vec4 color = color0 * texture2D(texture,uv);
+    // 边缘颜色
+    vec4 edge_color = color;
+    // 边缘羽化,默认0.01,减少抗锯齿
+    float blur = edge_blur;
+
+      // 如果有外部颜色,重新定义 边缘颜色
+      #if USE_EDGE_COLOR
+        // 如果应用贴图颜色混合
+        #if USER_TEXTURE_COLOR
+          edge_color = edge_color0  * texture2D(texture,uv);
+        #else
+          edge_color = edge_color0;
+        #endif
+      #endif
+        
+      if(dis > 0.001)
+      {
+        // 外圈沟
+        float gap = edge * blur;
+        if (dis <= edge - gap) {
+            color = color;
+        } else if (dis <= edge) {
+          // 平滑过渡: ret smoothstep(a, b, x) 可以用来生成0到1的平滑过渡.
+          float t = smoothstep(0.,gap,edge-dis);
+            
+          // 边缘颜色和透明度
+          color = vec4(edge_color.rgb,t * edge_color.a);
+        } else {
+          // 隐藏不要的部分
+          color = vec4(edge_color.rgb,0.); 
+        }
+      } else {
+        color =  color;
+      }
   }
 
   void main () {

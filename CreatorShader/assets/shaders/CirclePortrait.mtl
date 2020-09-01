@@ -28,7 +28,8 @@
           "a": 255
         },
         "u_offset": 0.1,
-        "u_edge": 0.5
+        "u_edge": 0.5,
+        "edge_blur": 2
       }
     }
   }
