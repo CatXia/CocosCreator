@@ -15,7 +15,7 @@ CCEffect %{
       properties:
         texture: { value: white }
         alphaThreshold: { value: 0.5 }
-        num: { value: 0.05 }
+        blurriness: { value: 0.05 }
 }%
 
 
@@ -71,7 +71,7 @@ CCProgram fs %{
 
   uniform OutlineFrag {
     // 模糊度，用户输入
-    float num;
+    float blurriness;
   };
   // 应用贴图UV
   vec4 draw(vec2 uv) {
@@ -93,12 +93,12 @@ CCProgram fs %{
     //重复采样
     for (float i = 0.; i < repeats; i += 1.) {
       // 第一采样点
-      vec2 q = vec2(cos(degrees((i / repeats) * 360.)), sin(degrees((i / repeats) * 360.0))) * (rand(vec2(i, v_uv0.x + v_uv0.y)) + num);
-      vec2 uv2 = v_uv0 + (q * num);
+      vec2 q = vec2(cos(degrees((i / repeats) * 360.)), sin(degrees((i / repeats) * 360.0))) * (rand(vec2(i, v_uv0.x + v_uv0.y)) + blurriness);
+      vec2 uv2 = v_uv0 + (q * blurriness);
       blurred_image += draw(uv2) / 2.;
       // 第二采样点
-      q = vec2(cos(degrees((i / repeats) * 360.)), sin(degrees((i / repeats) * 360.0))) * (rand(vec2(i + 2., v_uv0.x + v_uv0.y + 24.)) + num);
-      uv2 = v_uv0 + (q * num);
+      q = vec2(cos(degrees((i / repeats) * 360.)), sin(degrees((i / repeats) * 360.0))) * (rand(vec2(i + 2., v_uv0.x + v_uv0.y + 24.)) + blurriness);
+      uv2 = v_uv0 + (q * blurriness);
       blurred_image += draw(uv2) / 2.;
     }
     blurred_image /= repeats;

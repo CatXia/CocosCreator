@@ -74,6 +74,7 @@ CCProgram fs %{
     float u_offset;
     float edge_blur;
   };
+  
   uniform ColorFrag {
     vec4 color0;
     vec4 edge_color0;
