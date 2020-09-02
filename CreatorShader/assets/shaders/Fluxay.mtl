@@ -1,0 +1,26 @@
+{
+  "__type__": "cc.Material",
+  "_name": "Fluxay",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "dda10906-8a38-4500-b5a6-58d5040d2a52"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "props": {
+        "color": {
+          "__type__": "cc.Color",
+          "r": 252,
+          "g": 247,
+          "b": 247,
+          "a": 255
+        }
+      },
+      "defines": {
+        "USE_TEXTURE": true
+      }
+    }
+  }
+}

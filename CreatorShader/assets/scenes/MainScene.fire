@@ -251,9 +251,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 239,
-      "g": 239,
-      "b": 232,
+      "r": 4,
+      "g": 4,
+      "b": 4,
       "a": 255
     },
     "_contentSize": {
@@ -399,7 +399,7 @@
     "_enabled": true,
     "_materials": [
       {
-        "__uuid__": "d7f38165-f12c-4778-abb1-d29e21ebca79"
+        "__uuid__": "4340668c-57f2-48d3-9c5d-ad8212fc1738"
       }
     ],
     "_srcBlendFactor": 770,

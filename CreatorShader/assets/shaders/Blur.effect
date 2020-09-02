@@ -75,7 +75,11 @@ CCProgram fs %{
   };
   // 应用贴图UV
   vec4 draw(vec2 uv) {
-    return texture2D(texture, uv).rgba;
+    vec4 o = vec4(1, 1, 1, 1);
+    #if USE_TEXTURE
+      CCTexture(texture, uv, o);
+    #endif
+    return o;
   }
 
   float grid(float var, float size) {
