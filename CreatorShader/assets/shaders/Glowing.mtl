@@ -1,0 +1,26 @@
+{
+  "__type__": "cc.Material",
+  "_name": "Glowing",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "dc57243b-14e6-41de-b2d9-42308e080ebb"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "defines": {
+        "USE_TEXTURE": true
+      },
+      "props": {
+        "color": {
+          "__type__": "cc.Color",
+          "r": 249,
+          "g": 246,
+          "b": 246,
+          "a": 255
+        }
+      }
+    }
+  }
+}

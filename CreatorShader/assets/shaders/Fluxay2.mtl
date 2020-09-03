@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.Material",
+  "_name": "Fluxay2",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "3875eea1-cdd3-44aa-a906-bdbf20ed0503"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "defines": {
+        "USE_TEXTURE": true
+      },
+      "props": {
+        "width": 1,
+        "color": {
+          "__type__": "cc.Color",
+          "r": 232,
+          "g": 8,
+          "b": 8,
+          "a": 255
+        },
+        "factor": 1
+      }
+    }
+  }
+}

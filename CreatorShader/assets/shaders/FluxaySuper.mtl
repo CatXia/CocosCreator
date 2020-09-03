@@ -1,0 +1,21 @@
+{
+  "__type__": "cc.Material",
+  "_name": "FluxaySuper",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "6f2ac122-78fe-4a1b-b850-f2043a529d17"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "defines": {
+        "USE_TEXTURE": true
+      },
+      "props": {
+        "text": 1,
+        "time": 1
+      }
+    }
+  }
+}
