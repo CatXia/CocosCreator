@@ -1,20 +1,19 @@
 {
   "__type__": "cc.Material",
-  "_name": "Blur",
+  "_name": "Water",
   "_objFlags": 0,
   "_native": "",
   "_effectAsset": {
-    "__uuid__": "7689bef7-1615-4973-a8fa-3dda19c04a36"
+    "__uuid__": "7a7a84b0-5b34-47d4-b341-ff9a5d80568b"
   },
   "_techniqueIndex": 0,
   "_techniqueData": {
     "0": {
       "defines": {
-        "USE_TEXTURE": true,
-        "USE_ALPHA_TEST": false
+        "USE_TEXTURE": true
       },
       "props": {
-        "blurriness": 0.01
+        "time": 100
       }
     }
   }

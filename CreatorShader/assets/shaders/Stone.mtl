@@ -1,0 +1,26 @@
+{
+  "__type__": "cc.Material",
+  "_name": "Stone",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "a531a7ed-6d5d-4925-a4ab-41dfd84e9256"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "defines": {
+        "USE_TEXTURE": true
+      },
+      "props": {
+        "color": {
+          "__type__": "cc.Color",
+          "r": 126,
+          "g": 242,
+          "b": 170,
+          "a": 255
+        }
+      }
+    }
+  }
+}

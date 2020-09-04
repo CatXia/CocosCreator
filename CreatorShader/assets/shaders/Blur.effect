@@ -96,12 +96,13 @@ CCProgram fs %{
     vec4 blurred_image = vec4(0.);
     //重复采样
     for (float i = 0.; i < repeats; i += 1.) {
+      float dg = degrees((i / repeats) * 360.);
       // 第一采样点
-      vec2 q = vec2(cos(degrees((i / repeats) * 360.)), sin(degrees((i / repeats) * 360.0))) * (rand(vec2(i, v_uv0.x + v_uv0.y)) + blurriness);
+      vec2 q = vec2(cos(dg), sin(dg)) * (rand(vec2(i, v_uv0.x + v_uv0.y)) + blurriness);
       vec2 uv2 = v_uv0 + (q * blurriness);
       blurred_image += draw(uv2) / 2.;
       // 第二采样点
-      q = vec2(cos(degrees((i / repeats) * 360.)), sin(degrees((i / repeats) * 360.0))) * (rand(vec2(i + 2., v_uv0.x + v_uv0.y + 24.)) + blurriness);
+      q = vec2(cos(dg), sin(dg)) * (rand(vec2(i + 2., v_uv0.x + v_uv0.y + 24.)) + blurriness);
       uv2 = v_uv0 + (q * blurriness);
       blurred_image += draw(uv2) / 2.;
     }

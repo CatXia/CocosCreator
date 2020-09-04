@@ -1,0 +1,30 @@
+{
+  "__type__": "cc.Material",
+  "_name": "RadialBlur",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "a8b2618c-461c-40f1-b76e-87b051ef7193"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "defines": {
+        "USE_TEXTURE": true
+      },
+      "props": {
+        "iCenter": {
+          "__type__": "cc.Vec2",
+          "x": 0.5,
+          "y": 0.5
+        },
+        "iResolution": {
+          "__type__": "cc.Vec2",
+          "x": 400,
+          "y": 200
+        },
+        "strength": 0.1
+      }
+    }
+  }
+}
