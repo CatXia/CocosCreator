@@ -14,7 +14,8 @@
         "USE_ALPHA_TEST": false
       },
       "props": {
-        "blurriness": 0.01
+        "blurriness": 0.01,
+        "light": 0.9
       }
     }
   }

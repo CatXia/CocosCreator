@@ -16,6 +16,7 @@ CCEffect %{
         texture: { value: white }
         alphaThreshold: { value: 0.5 }
         blurriness: { value: 0.05 }
+        light: { value: 1.0 }
 }%
 
 
@@ -70,8 +71,8 @@ CCProgram fs %{
   #endif
 
   uniform OutlineFrag {
-    // 模糊度，用户输入
     float blurriness;
+    float light;
   };
   // 应用贴图UV
   vec4 draw(vec2 uv) {
@@ -85,6 +86,11 @@ CCProgram fs %{
   float grid(float var, float size) {
     return floor(var * size) / size;
   }
+
+  // 降低亮度
+	vec4 dim(vec4 col, float factor) {
+		return vec4(col.r * factor, col.g * factor, col.b * factor, col.a);
+	}
 
   // 随机值
   float rand(vec2 co) {
@@ -107,6 +113,8 @@ CCProgram fs %{
       blurred_image += draw(uv2) / 2.;
     }
     blurred_image /= repeats;
+
+    blurred_image = dim(blurred_image, light);
 
     gl_FragColor = vec4(blurred_image);
   }

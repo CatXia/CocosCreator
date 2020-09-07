@@ -15,7 +15,7 @@ CCEffect %{
         alphaThreshold: { value: 0.5 }
         factor: { value: 0.6 }
         width: { value: 0.02 }
-        color: { value: [10.0, 10.0, 10.0, 1.0], editor: {type : color}}
+        color: { value: [1.0, 1.0, 1.0, 1.0], editor: {type : color}}
 }%
 
 
