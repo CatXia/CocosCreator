@@ -1,0 +1,32 @@
+{
+  "__type__": "cc.Material",
+  "_name": "Stroke",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "b12735e9-7565-4f5d-9847-b4798cf7afb3"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "defines": {
+        "USE_TEXTURE": true
+      },
+      "props": {
+        "edgeColor": {
+          "__type__": "cc.Color",
+          "r": 188,
+          "g": 237,
+          "b": 13,
+          "a": 255
+        },
+        "edgeWidth": 10,
+        "iResolution": {
+          "__type__": "cc.Vec2",
+          "x": 1624,
+          "y": 1218
+        }
+      }
+    }
+  }
+}
