@@ -14,6 +14,7 @@ CCEffect %{
         texture: { value: white }
         alphaThreshold: { value: 0.5 }
         color: { value: [1,1,1,1], editor: { type: color }}
+        iResolution: { value: [1280, 720] }
 }%
 
 
@@ -78,7 +79,7 @@ CCProgram fs %{
       CCTexture(texture, v_uv0, o);
     #endif
 
-    vec2 unit = 1.0 / v_uv0.xy;
+    vec2 unit = 1.0 / iResolution.xy;
     vec4 finalColor = vec4(0.0);
     float density = 0.0;
     
