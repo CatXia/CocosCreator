@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.Material",
+  "_name": "TrunPage3D",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "c428e162-9aa1-4b71-8e0d-2e95a3a07c46"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "props": {
+        "xTop": 0.5,
+        "xBot": 0.5,
+        "angle": 120
+      },
+      "defines": {
+        "USE_TEXTURE": true
+      }
+    }
+  }
+}

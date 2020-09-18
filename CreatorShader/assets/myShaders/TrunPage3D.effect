@@ -1,0 +1,196 @@
+/*
+ * 伪3D的折叠效果，将图形的一部分进行角度投影
+ */
+
+CCEffect %{
+  techniques:
+  - passes:
+    - vert: vs
+      frag: fs
+      blendState:
+        targets:
+        - blend: true
+      rasterizerState:
+        cullMode: none
+      properties:
+        texture: { value: white }
+        alphaThreshold: { value: 0.5 }
+        xTop: { value: 0.3 }
+        xBot: { value: 0.5 }
+        angle: { value: 180 }
+}%
+
+
+CCProgram vs %{
+  precision highp float;
+
+  #include <cc-global>
+  #include <cc-local>
+
+  in vec3 a_position;
+  in vec4 a_color;
+  out vec4 v_color;
+
+  #if USE_TEXTURE
+  in vec2 a_uv0;
+  out vec2 v_uv0;
+  #endif
+
+  void main () {
+    vec4 pos = vec4(a_position, 1);
+
+    #if CC_USE_MODEL
+    pos = cc_matViewProj * cc_matWorld * pos;
+    #else
+    pos = cc_matViewProj * pos;
+    #endif
+
+    #if USE_TEXTURE
+    v_uv0 = a_uv0;
+    #endif
+
+    v_color = a_color;
+
+    gl_Position = pos;
+  }
+}%
+
+
+CCProgram fs %{
+  precision highp float;
+  
+  #include <alpha-test>
+  #include <texture>
+
+  in vec4 v_color;
+
+  #if USE_TEXTURE
+  in vec2 v_uv0;
+  uniform sampler2D texture;
+  #endif
+
+  uniform IN_PUT_VALUE {
+    float angle;
+    float xBot;
+    float xTop;
+  };
+  // 计算uv对应旋转前的坐标
+  vec2 getBeginPos() {
+    vec2 uv = v_uv0;
+    // pai / 180 = 0.01745329252
+    float rad = radians(angle); 
+    if (abs(xBot - xTop) < 0.001) {
+      float px = xTop;
+      float py = uv.y;
+      float xx = (uv.x - px) / cos(rad) + xTop;
+      float yy = uv.y;
+      return vec2(xx, yy);
+    }
+    // // 从Top点到Bot点的向量be
+    // vec3 be = vec3(xBT, 1.0, 0.0);
+    // // 旋转后的点坐标
+    // vec3 p2 = vec3(uv.x, uv.y, z);
+    // // 向量pp2垂直于向量be，相交于点p
+    // vec3 p = vec3(px, py, 0)
+    // // p点在向量be上
+    // (py - 0) / (px - xTop) = (1 - 0) / (xBot - xTop)
+    // py = 1 / (xBot - xTop) * (px - xTop)
+    // 简化下常量
+    float xBT = 1.0 / (xBot - xTop);
+    // py = xBT * (px - xTop);
+    // // pp2与be垂直
+    // vec3 pp2 = vec3(uv.x - px, uv.y - py, z);
+    // xBT * (uv.x - px) + (uv.y - py) * 1.0 = 0
+    // // ==> 可求得px, py
+    // py = xBT * (uv.x - px) + uv.y
+    // xBT * (px - xTop) = xBT * (uv.x - px) + uv.y
+    // xBT * (px - xTop - uv.x + px) = uv.y
+    // 2.0 * px - xTop - uv.x = uv.y / xBT
+    // px = (uv.y / xBT + xTop + uv.x) / 2.0
+    // py = xBT * ((uv.y / xBT + xTop + uv.x) / 2.0 - xTop)
+    // py = xBT * (uv.y / xBT - xTop + uv.x) / 2.0
+    // py = uv.y / 2.0 + xBT * (uv.x - xTop) / 2.0
+
+    float px = (uv.y / xBT + xTop + uv.x) / 2.0;
+    float py = xBT * (px - xTop);
+    // // 假设初始点坐标
+    // vec3 p1 = vec3(xx, yy, 0);
+    // // 向量be与向量pp1垂直，相交于点p
+    // vec3 pp1 = vec3(xx - px, yy - py, 0) 
+    // xBT * (xx - px) + (yy - py) * 1.0 = 0;
+    // // ==> 可推出yy对应的xx表达式
+    // yy = py - xBT * (xx - px);
+    // // pp1与pp2相等
+    // pow(xx - px, 2) + pow(yy - py, 2) = pow(uv.x - px, 2) + pow(uv.y - py, 2) + pow(z, 2);
+    // // pp1与pp2夹角为angle
+    // (xx - px) * (uv.x - px) + (yy - py) * (uv.y - py) = cos(rad) * (pow(xx - px, 2) + pow(yy - py, 2));
+    // (xx - px) * (uv.x - px) + (py - xBT * (xx - px) - py) * (uv.y - py) = cos(rad) * (pow(xx - px, 2) + pow(py - xBT * (xx - px) - py, 2));
+    // (xx - px) * (uv.x - px) - xBT * (xx - px) * (uv.y - py) = cos(rad) * (pow(xx - px, 2) + pow((xx - px) * xBT, 2));
+    // (xx - px) * (uv.x - px - xBT * (uv.y - py)) = cos(rad) * pow(xx - px, 2) * (1 + xBT * xBT)
+    // uv.x - px - xBT * (uv.y - py) = cos(rad) * (xx - px) * (1 + xBT * xBT);
+    // xx = (uv.x - px - xBT * (uv.y - py)) / (cos(rad) * (1 + xBT * xBT)) + px
+    float f1 = uv.x - px - xBT * (uv.y - py);
+    float f2 = cos(rad) * (1.0 + xBT * xBT);
+    float xx = f1 / f2 + px;
+    float yy = py - (xx - px) * xBT;
+    return vec2(xx, yy);
+  }
+
+  void main () {
+    vec4 myC = vec4(0, 0, 0, 0);
+    float slope = 1.0 / (xBot - xTop);
+    float xMax = max(xBot, xTop);
+    float xMin = min(xBot, xTop);
+    
+    // 显示折线
+    if (v_uv0.y == (v_uv0.x - xTop) * slope) {
+      gl_FragColor = vec4(1, 1, 1, 1);
+      return;
+    }
+
+    // 裁掉右边的
+    vec4 myC1 = vec4(0, 0, 0, 0);
+    if (v_uv0.x > xMax) {
+      // discard;
+    } else if(v_uv0.x < xMin) {
+      myC1 = texture2D(texture, v_uv0);
+    } else if (xTop > xBot) {
+      if(v_uv0.y > (v_uv0.x - xTop) * slope){
+        // discard;
+      } else {
+        myC1 = texture2D(texture, v_uv0);
+      }
+    } else if (xTop < xBot) {
+      if(v_uv0.y < (v_uv0.x - xTop) * slope){
+        // discard;
+      } else {
+        myC1 = texture2D(texture, v_uv0);
+      }
+    }
+
+    // 折叠左边的
+    vec4 myC2 = vec4(0, 0, 0, 0);
+    vec2 uv = getBeginPos();
+    if (uv.x > 1.0 || uv.y > 1.0 || uv.x < 0.0 || uv.y < 0.0) {
+      // discard;
+    } else if (uv.x > xMax) {
+      myC2 = texture2D(texture, uv);
+    } else if(uv.x < xMin) {
+      // discard;
+    } else if (xTop > xBot) {
+      if(uv.y > (uv.x - xTop) * slope){
+        myC2 = texture2D(texture, uv);
+      } else {
+        // discard;
+      }
+    } else if (xTop < xBot) {
+      if(uv.y < (uv.x - xTop) * slope){
+        myC2 = texture2D(texture, uv);
+      } else {
+        // discard;
+      }
+    }
+    // 用普通的颜色混合算法
+    gl_FragColor = vec4(myC2 * myC2.a+ myC1 * (1.0 - myC2.a));
+  }
+}%
